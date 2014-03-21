@@ -75,7 +75,7 @@ def compare(new_results, previous_results):
             try:
                 f.write("<tr><td>"+str(key)[:50]+"</td><td>Unknown</td><td>%.2f</td><td>Unknown</td><td>%.2f</td><td>Unknown</td><td>%.2f</td><td>%.4f</td>"%(1/new_results[key]["average"], 1/new_results[key]["first_centile"], 1/new_results[key]["last_centile"], diff)+"<td style='background: "+str(color)+"'>"+str(status)+"</td></tr>")
             except:
-                print kem
+                print key
 
 
     f.write("</tbody></table></body></html>")
