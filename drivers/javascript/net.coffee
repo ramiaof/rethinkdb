@@ -7,6 +7,7 @@ cursors = require('./cursor')
 pb = require('./protobuf')
 
 r = require('./ast')
+Promise = require('bluebird')
 
 # Import some names to this namespace for convienience
 ar = util.ar
@@ -478,21 +479,28 @@ module.exports.isConnection = (connection) ->
     return connection instanceof Connection
 
 # The main function of this module
-module.exports.connect = ar (host, callback) ->
+module.exports.connect = varar 1, 2, (host, callback) ->
     # Host must be a string or an object
     unless typeof(host) is 'string' or Object::toString.call(host) is '[object Object]'
         throw new err.RqlDriverError "First argument to `connect` must be a string giving the "+
                                      "host to `connect` to or an object giving `host` and `port`."
 
-    # Callback must be a function
-    unless typeof(callback) is 'function'
-        throw new err.RqlDriverError "Second argument to `connect` must be a callback to invoke with "+
-                                     "either an error or the successfully established connection."
+    create_connection = (host, callback) =>
+        if TcpConnection.isAvailable()
+            new TcpConnection host, callback
+        else if HttpConnection.isAvailable()
+            new HttpConnection host, callback
+        else
+            throw new err.RqlDriverError "Neither TCP nor HTTP avaiable in this environment"
 
-    if TcpConnection.isAvailable()
-        new TcpConnection host, callback
-    else if HttpConnection.isAvailable()
-        new HttpConnection host, callback
+
+    if typeof callback is 'function'
+        create_connection(host, callback)
     else
-        throw new err.RqlDriverError "Neither TCP nor HTTP avaiable in this environment"
-    return
+        p = new Promise (resolve, reject) ->
+            callback = (err, result) ->
+                if (err)
+                    reject(err)
+                else
+                    resolve(result)
+            create_connection(host, callback)
