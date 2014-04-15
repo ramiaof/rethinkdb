@@ -16,6 +16,7 @@ var r = require('../../../build/packages/js/rethinkdb');
 
 var assertNoError = function(err) {
     if (err) {
+        console.log(1);
         throw new Error("Error '"+err+"' not expected")
     }
 };
@@ -52,51 +53,57 @@ r.connect({port: port}).then(function(c) {
 
 
     tbl.run(c).then(function(cur) {
-        var ar_to_send = []
-        var limit=10000; // Keep a "big" value to try hitting `maximum call stack exceed`
-        for(var i=0; i<limit; i++) {
-            ar_to_send.push(i);
-        }
-        r(ar_to_send).run(c).then(function(res) {
-            var i = 0;
-            res.each(function(err, res2) {
-                assert(res2 === ar_to_send[i])
-                i++;
-            })
-        }).error(function(err) {
-            assertNoError(err);
-        });
-
-        // Test the toArray
-        limit = 3;
-        var ar_to_send2 = [0, 1, 2]
-        r(ar_to_send2).run(c).then(function(res) {
-            res.toArray().then(function(res2) {
-                // Make sure we didn't create a copy here
-                assert(res === res2);
-
-                // Test values
-                for(var i=0; i<ar_to_send2.length; i++) {
-                    assert(ar_to_send2[i] === res2[i]);
+        cur.next().then(function(result) {
+            assert(result);
+            cur.toArray().then(function(result) {
+                assert(result.length === (num_rows-1))
+                var ar_to_send = []
+                var limit=10000; // Keep a "big" value to try hitting `maximum call stack exceed`
+                for(var i=0; i<limit; i++) {
+                    ar_to_send.push(i);
                 }
-            }).error(assertNoError)
-            res.next().then(function(row) {
-                assert(row === ar_to_send2[0])
-                res.toArray().then(function(res2) {
-                    // Make sure we didn't create a copy here
-                    assert(res2.length === (ar_to_send2.length-1));
+                r(ar_to_send).run(c).then(function(res) {
+                    var i = 0;
+                    res.each(function(err, res2) {
+                        assert(res2 === ar_to_send[i])
+                        i++;
+                    })
+                }).error(function(err) {
+                    assertNoError(err);
+                });
 
-                    // Test values
-                    for(var i=0; i<res2.length; i++) {
-                        assert(ar_to_send2[i+1] === res2[i]);
-                    }
-                    // Test reconnect, noreplyWait, close
-                    c.reconnect().then(function(c) {
-                        c.noreplyWait().then(function() {
-                            c.close().then(function() {
-                                c.reconnect().then(function(c) {
-                                    c.noreplyWait().then(function() {
-                                        c.close().then(function() {
+                // Test the toArray
+                limit = 3;
+                var ar_to_send2 = [0, 1, 2]
+                r(ar_to_send2).run(c).then(function(res) {
+                    res.toArray().then(function(res2) {
+                        // Make sure we didn't create a copy here
+                        assert(res === res2);
+
+                        // Test values
+                        for(var i=0; i<ar_to_send2.length; i++) {
+                            assert(ar_to_send2[i] === res2[i]);
+                        }
+                    }).error(assertNoError)
+                    res.next().then(function(row) {
+                        assert(row === ar_to_send2[0])
+                        res.toArray().then(function(res2) {
+                            // Make sure we didn't create a copy here
+                            assert(res2.length === (ar_to_send2.length-1));
+
+                            // Test values
+                            for(var i=0; i<res2.length; i++) {
+                                assert(ar_to_send2[i+1] === res2[i]);
+                            }
+                            // Test reconnect, noreplyWait, close
+                            c.reconnect().then(function(c) {
+                                c.noreplyWait().then(function() {
+                                    c.close().then(function() {
+                                        c.reconnect().then(function(c) {
+                                            c.noreplyWait().then(function() {
+                                                c.close().then(function() {
+                                                }).error(assertNoError)
+                                            }).error(assertNoError)
                                         }).error(assertNoError)
                                     }).error(assertNoError)
                                 }).error(assertNoError)
@@ -104,8 +111,8 @@ r.connect({port: port}).then(function(c) {
                         }).error(assertNoError)
                     }).error(assertNoError)
                 }).error(assertNoError)
-            }).error(assertNoError)
-        }).error(assertNoError)
+            });
+        });
     }).error(assertNoError)
 }).error(assertNoError)
 

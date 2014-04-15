@@ -37,9 +37,6 @@ class IterableResult
     )
 
     toArray: varar 0, 1, (cb) ->
-        unless typeof cb is 'function'
-            throw new err.RqlDriverError "Argument to toArray must be a function."
-
         fn = (cb) =>
             arr = []
             if not @hasNext()
@@ -55,7 +52,7 @@ class IterableResult
 
         if typeof cb is 'function'
             fn(cb)
-        else
+        else if cb is undefined
             p = new Promise (resolve, reject) =>
                 cb = (err, result) ->
                     if err?
@@ -64,6 +61,8 @@ class IterableResult
                         resolve(result)
                 fn(cb)
             return p
+        else
+            throw new err.RqlDriverError "First argument to `toArray` must be a function or undefined."
 
 class Cursor extends IterableResult
     stackSize: 100
@@ -189,7 +188,7 @@ class Cursor extends IterableResult
 
         if typeof cb is "function"
             fn(cb)
-        else
+        else if cb is undefined
             p = new Promise (resolve, reject) ->
                 cb = (err, result) ->
                     if (err)
@@ -198,6 +197,8 @@ class Cursor extends IterableResult
                         resolve(result)
                 fn(cb)
             return p
+        else
+            throw new err.RqlDriverError "First argument to `next` must be a function or undefined."
 
     close: ar () ->
         unless @_endFlag

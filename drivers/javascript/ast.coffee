@@ -67,10 +67,13 @@ class TermBase
         
         if net.isConnection(connection) is true
             # Handle run(connection, callback)
-            if typeof options is "function"
-                callback = options
-                options = {}
-            # else we suppose that we have run(connection, options[, callback])
+            if typeof options is "function" 
+                if callback isnt undefined
+                    callback = options
+                    options = {}
+                else
+                    throw new err.RqlDriverError "Second argument to `run` cannot be a function is a third argument is provided."
+            # else we suppose that we have run(connection[, options][, callback])
         else if connection?.constructor is Object
             if @showRunWarning is true
                 process?.stderr.write("RethinkDB warning: This syntax is deprecated. Please use `run(connection[, options], callback)`.")
@@ -101,7 +104,7 @@ class TermBase
                 if typeof(callback) is 'function'
                     callback(e)
         else
-            p = new Promise (resolve, reject) =>
+            new Promise (resolve, reject) =>
                 callback = (err, result) ->
                     if err?
                         reject(err)
