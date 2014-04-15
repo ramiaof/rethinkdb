@@ -68,7 +68,7 @@ class TermBase
         if net.isConnection(connection) is true
             # Handle run(connection, callback)
             if typeof options is "function" 
-                if callback isnt undefined
+                if callback is undefined
                     callback = options
                     options = {}
                 else
