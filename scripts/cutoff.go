@@ -42,8 +42,8 @@ func handleConnection(in net.Conn, outaddr string) {
 }
 
 func main() {
-	var inaddr = flag.String("in", ":12015", "listening port")
-	var outaddr = flag.String("out", ":29015", "connecting port")
+	var inaddr = flag.String("in", ":12015", "listening address")
+	var outaddr = flag.String("out", "[::1]:29015", "connecting address")
 	flag.Parse()
 
 	ln, err := net.Listen("tcp", *inaddr)
