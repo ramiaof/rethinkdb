@@ -269,7 +269,7 @@ private:
         controller->readable_dispatchees.push_back(this);
     }
 
-    void downgrade(mailbox_addr_t<void()> ack_addr, auto_drainer_t::lock_t) THROWS_NOTHING {
+    void downgrade(mailbox_addr_t<> ack_addr, auto_drainer_t::lock_t) THROWS_NOTHING {
         {
             DEBUG_VAR mutex_assertion_t::acq_t acq(&controller->mutex);
             ASSERT_FINITE_CORO_WAITING;
@@ -353,7 +353,7 @@ void broadcaster_t::listener_write(
         mirror->local_listener->local_write(w, ts, order_token, token, interruptor);
     } else {
         cond_t ack_cond;
-        mailbox_t<void()> ack_mailbox(
+        mailbox_t<> ack_mailbox(
             mailbox_manager,
             std::bind(&cond_t::pulse, &ack_cond));
 
@@ -382,7 +382,7 @@ void broadcaster_t::listener_read(
                                                        interruptor);
     } else {
         cond_t resp_cond;
-        mailbox_t<void(read_response_t)> resp_mailbox(
+        mailbox_t<read_response_t> resp_mailbox(
             mailbox_manager,
             std::bind(&store_listener_response<read_response_t>, response, ph::_1, &resp_cond));
 
@@ -560,7 +560,7 @@ void broadcaster_t::background_writeread(
                     token, durability, mirror_lock.get_drain_signal());
         } else {
             cond_t response_cond;
-            mailbox_t<void(write_response_t)> response_mailbox(
+            mailbox_t<write_response_t> response_mailbox(
                 mailbox_manager,
                 boost::bind(&store_listener_response<write_response_t>, &response, _1,
                             &response_cond));

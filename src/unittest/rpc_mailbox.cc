@@ -149,9 +149,9 @@ TPTEST_MULTITHREAD(RPCMailboxTest, TypedMailbox, 3) {
     connectivity_cluster_t::run_t r(&c, get_unittest_addresses(), peer_address_t(), ANY_PORT, &m, 0, NULL);
 
     std::vector<std::string> inbox;
-    mailbox_t<void(std::string)> mbox(&m, std::bind(&string_push_back, &inbox, ph::_1));
+    mailbox_t<std::string> mbox(&m, std::bind(&string_push_back, &inbox, ph::_1));
 
-    mailbox_addr_t<void(std::string)> addr = mbox.get_address();
+    mailbox_addr_t<std::string> addr = mbox.get_address();
 
     send(&m, addr, std::string("foo"));
     send(&m, addr, std::string("bar"));

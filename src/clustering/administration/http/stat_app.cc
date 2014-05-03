@@ -27,7 +27,7 @@ public:
         : response_mailbox(mbox_manager, std::bind(&promise_t<perfmon_result_t>::pulse, &stats, ph::_1))
     { }
     promise_t<perfmon_result_t> stats;
-    mailbox_t<void(perfmon_result_t)> response_mailbox;
+    mailbox_t<perfmon_result_t> response_mailbox;
 };
 
 stat_http_app_t::stat_http_app_t(mailbox_manager_t *_mbox_manager,

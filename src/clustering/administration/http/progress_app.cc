@@ -28,10 +28,10 @@ static const uint64_t MAX_PROGRESS_REQ_TIMEOUT_MS = 60*1000;
 class request_record_t {
 public:
     scoped_ptr_t<promise_t<std::pair<int, int> > > promise;
-    scoped_ptr_t<mailbox_t<void(std::pair<int, int>)> > resp_mbox;
+    scoped_ptr_t<mailbox_t<std::pair<int, int> > > resp_mbox;
 
     // TODO: We take ownership of these pointers?  Look at users.
-    request_record_t(promise_t<std::pair<int, int> > *_promise, mailbox_t<void(std::pair<int, int>)> *_resp_mbox)
+    request_record_t(promise_t<std::pair<int, int> > *_promise, mailbox_t<std::pair<int, int> > *_resp_mbox)
         : promise(_promise), resp_mbox(_resp_mbox)
     { }
 };
@@ -151,7 +151,7 @@ void send_backfill_requests_t::handle_request_internal(const reactor_business_ca
     boost::optional<backfiller_business_card_t> backfiller = boost::apply_visitor(get_backfiller_business_card_t(), region_activity_entry.activity);
     if (backfiller) {
         promise_t<std::pair<int, int> > *value = new promise_t<std::pair<int, int> >;
-        mailbox_t<void(std::pair<int, int>)> *resp_mbox = new mailbox_t<void(std::pair<int, int>)>(
+        mailbox_t<std::pair<int, int> > *resp_mbox = new mailbox_t<std::pair<int, int> >(
             mbox_manager,
             std::bind(&promise_t<std::pair<int, int> >::pulse, value, ph::_1));
 

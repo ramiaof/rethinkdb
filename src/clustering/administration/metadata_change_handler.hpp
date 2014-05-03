@@ -15,10 +15,10 @@
 template <class metadata_t>
 class metadata_change_handler_t {
 public:
-    typedef mailbox_t<void(bool)> result_mailbox_t;
-    typedef mailbox_t<void(bool, metadata_t, typename result_mailbox_t::address_t)> commit_mailbox_t;
-    typedef mailbox_t<void(metadata_t, typename commit_mailbox_t::address_t)> ack_mailbox_t;
-    typedef mailbox_t<void(typename ack_mailbox_t::address_t)> request_mailbox_t;
+    typedef mailbox_t<bool> result_mailbox_t;
+    typedef mailbox_t<bool, metadata_t, typename result_mailbox_t::address_t> commit_mailbox_t;
+    typedef mailbox_t<metadata_t, typename commit_mailbox_t::address_t> ack_mailbox_t;
+    typedef mailbox_t<typename ack_mailbox_t::address_t> request_mailbox_t;
 
     metadata_change_handler_t(mailbox_manager_t *_mailbox_manager,
                               const boost::shared_ptr<semilattice_readwrite_view_t<metadata_t> > &_metadata) :

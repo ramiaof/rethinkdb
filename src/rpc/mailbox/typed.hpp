@@ -12,69 +12,69 @@ Please modify '../scripts/generate_rpc_templates.py' instead of modifying this f
 #include "rpc/mailbox/mailbox.hpp"
 #include "rpc/semilattice/joins/macros.hpp"
 
-template <class> class mailbox_t;
+template <class...> class mailbox_t;
 
-template <class T>
+template <class... Args>
 class mailbox_addr_t {
 public:
     bool is_nil() const { return addr.is_nil(); }
     peer_id_t get_peer() const { return addr.get_peer(); }
 
-    friend class mailbox_t<T>;
+    friend class mailbox_t<Args...>;
 
     RDB_MAKE_ME_SERIALIZABLE_1(0, addr);
-    RDB_MAKE_ME_EQUALITY_COMPARABLE_1(mailbox_addr_t<T>, addr);
+    RDB_MAKE_ME_EQUALITY_COMPARABLE_1(mailbox_addr_t<Args...>, addr);
 
 private:
-    friend void send(mailbox_manager_t *, mailbox_addr_t<void()>);
+    friend void send(mailbox_manager_t *, mailbox_addr_t<>);
     template <class a0_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t) >::address_t, const a0_t&);
+                     typename mailbox_t<a0_t>::address_t, const a0_t&);
     template <class a0_t, class a1_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t) >::address_t, const a0_t&, const a1_t&);
+                     typename mailbox_t<a0_t, a1_t>::address_t, const a0_t&, const a1_t&);
     template <class a0_t, class a1_t, class a2_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t) >::address_t, const a0_t&, const a1_t&, const a2_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t>::address_t, const a0_t&, const a1_t&, const a2_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t, class a12_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&);
     template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t, class a12_t, class a13_t>
     friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t, a13_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&, const a13_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t, a13_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&, const a13_t&);
 
     raw_mailbox_t::address_t addr;
 };
 
 template<>
-class mailbox_t< void() > {
+class mailbox_t<> {
     class write_impl_t : public mailbox_write_callback_t {
     public:
         write_impl_t() { }
@@ -84,21 +84,21 @@ class mailbox_t< void() > {
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void() > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<> *_parent) : parent(_parent) { }
         void read(UNUSED read_stream_t *stream) {
             parent->fun();
         }
     private:
-        mailbox_t< void() > *parent;
+        mailbox_t<> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void() > address_t;
+    typedef mailbox_addr_t<> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void()> &f) :
+              const std::function<void ()> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -111,20 +111,20 @@ public:
 private:
     friend void send(mailbox_manager_t*, address_t);
 
-    std::function< void() > fun;
+    std::function<void ()> fun;
     raw_mailbox_t mailbox;
 };
 
 inline
 void send(mailbox_manager_t *src,
-           mailbox_t< void() >::address_t dest) {
-    mailbox_t< void() >::write_impl_t writer;
+           mailbox_t<>::address_t dest) {
+    mailbox_t<>::write_impl_t writer;
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t>
-class mailbox_t< void(arg0_t) > {
+class mailbox_t<arg0_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -139,7 +139,7 @@ class mailbox_t< void(arg0_t) > {
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -147,16 +147,16 @@ class mailbox_t< void(arg0_t) > {
             parent->fun(std::move(arg0));
         }
     private:
-        mailbox_t< void(arg0_t) > *parent;
+        mailbox_t<arg0_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t) > address_t;
+    typedef mailbox_addr_t<arg0_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t)> &f) :
+              const std::function<void (arg0_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -169,22 +169,22 @@ public:
 private:
     template<class a0_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t) >::address_t, const a0_t&);
+                     typename mailbox_t<a0_t>::address_t, const a0_t&);
 
-    std::function< void(arg0_t) > fun;
+    std::function<void (arg0_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t) >::address_t dest, const arg0_t &arg0) {
-    typename mailbox_t< void(arg0_t) >::write_impl_t writer(arg0);
+          typename mailbox_t<arg0_t>::address_t dest, const arg0_t &arg0) {
+    typename mailbox_t<arg0_t>::write_impl_t writer(arg0);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t>
-class mailbox_t< void(arg0_t, arg1_t) > {
+class mailbox_t<arg0_t, arg1_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -201,7 +201,7 @@ class mailbox_t< void(arg0_t, arg1_t) > {
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -212,16 +212,16 @@ class mailbox_t< void(arg0_t, arg1_t) > {
             parent->fun(std::move(arg0), std::move(arg1));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t) > *parent;
+        mailbox_t<arg0_t, arg1_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t)> &f) :
+              const std::function<void (arg0_t, arg1_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -234,22 +234,22 @@ public:
 private:
     template<class a0_t, class a1_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t) >::address_t, const a0_t&, const a1_t&);
+                     typename mailbox_t<a0_t, a1_t>::address_t, const a0_t&, const a1_t&);
 
-    std::function< void(arg0_t, arg1_t) > fun;
+    std::function<void (arg0_t, arg1_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1) {
-    typename mailbox_t< void(arg0_t, arg1_t) >::write_impl_t writer(arg0, arg1);
+          typename mailbox_t<arg0_t, arg1_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1) {
+    typename mailbox_t<arg0_t, arg1_t>::write_impl_t writer(arg0, arg1);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -268,7 +268,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t) > {
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -282,16 +282,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t) > {
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -304,22 +304,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t) >::address_t, const a0_t&, const a1_t&, const a2_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t>::address_t, const a0_t&, const a1_t&, const a2_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t) >::write_impl_t writer(arg0, arg1, arg2);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t>::write_impl_t writer(arg0, arg1, arg2);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -340,7 +340,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t) > {
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -357,16 +357,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t) > {
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -379,22 +379,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t) >::write_impl_t writer(arg0, arg1, arg2, arg3);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t>::write_impl_t writer(arg0, arg1, arg2, arg3);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -417,7 +417,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) > {
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -437,16 +437,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) > {
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -459,22 +459,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -499,7 +499,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) > {
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -522,16 +522,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) > {
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4), std::move(arg5));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -544,22 +544,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -586,7 +586,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) > 
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -612,16 +612,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) > 
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4), std::move(arg5), std::move(arg6));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -634,22 +634,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -678,7 +678,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -707,16 +707,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4), std::move(arg5), std::move(arg6), std::move(arg7));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -729,22 +729,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -775,7 +775,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -807,16 +807,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4), std::move(arg5), std::move(arg6), std::move(arg7), std::move(arg8));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -829,22 +829,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -877,7 +877,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -912,16 +912,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4), std::move(arg5), std::move(arg6), std::move(arg7), std::move(arg8), std::move(arg9));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -934,22 +934,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t, class arg10_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -984,7 +984,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -1022,16 +1022,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4), std::move(arg5), std::move(arg6), std::move(arg7), std::move(arg8), std::move(arg9), std::move(arg10));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -1044,22 +1044,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t, class arg10_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9, const arg10_t &arg10) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9, const arg10_t &arg10) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t, class arg10_t, class arg11_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -1096,7 +1096,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -1137,16 +1137,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4), std::move(arg5), std::move(arg6), std::move(arg7), std::move(arg8), std::move(arg9), std::move(arg10), std::move(arg11));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -1159,22 +1159,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t, class arg10_t, class arg11_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9, const arg10_t &arg10, const arg11_t &arg11) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9, const arg10_t &arg10, const arg11_t &arg11) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t, class arg10_t, class arg11_t, class arg12_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -1213,7 +1213,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -1257,16 +1257,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4), std::move(arg5), std::move(arg6), std::move(arg7), std::move(arg8), std::move(arg9), std::move(arg10), std::move(arg11), std::move(arg12));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -1279,22 +1279,22 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t, class a12_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t, class arg10_t, class arg11_t, class arg12_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9, const arg10_t &arg10, const arg11_t &arg11, const arg12_t &arg12) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9, const arg10_t &arg10, const arg11_t &arg11, const arg12_t &arg12) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
     send(src, dest.addr, &writer);
 }
 
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t, class arg10_t, class arg11_t, class arg12_t, class arg13_t>
-class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t) > {
+class mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t> {
     class write_impl_t : public mailbox_write_callback_t {
     private:
         const arg0_t &arg0;
@@ -1335,7 +1335,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
 
     class read_impl_t : public mailbox_read_callback_t {
     public:
-        explicit read_impl_t(mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t) > *_parent) : parent(_parent) { }
+        explicit read_impl_t(mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t> *_parent) : parent(_parent) { }
         void read(read_stream_t *stream) {
             arg0_t arg0;
             archive_result_t res = deserialize(stream, &arg0);
@@ -1382,16 +1382,16 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
             parent->fun(std::move(arg0), std::move(arg1), std::move(arg2), std::move(arg3), std::move(arg4), std::move(arg5), std::move(arg6), std::move(arg7), std::move(arg8), std::move(arg9), std::move(arg10), std::move(arg11), std::move(arg12), std::move(arg13));
         }
     private:
-        mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t) > *parent;
+        mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t> *parent;
     };
 
     read_impl_t reader;
 
 public:
-    typedef mailbox_addr_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t) > address_t;
+    typedef mailbox_addr_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t> address_t;
 
     mailbox_t(mailbox_manager_t *manager,
-              const std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t)> &f) :
+              const std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t)> &f) :
         reader(this), fun(f), mailbox(manager, &reader)
         { }
 
@@ -1404,16 +1404,16 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t, class a12_t, class a13_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t, a13_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&, const a13_t&);
+                     typename mailbox_t<a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t, a13_t>::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&, const a13_t&);
 
-    std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t) > fun;
+    std::function<void (arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t)> fun;
     raw_mailbox_t mailbox;
 };
 
 template<class arg0_t, class arg1_t, class arg2_t, class arg3_t, class arg4_t, class arg5_t, class arg6_t, class arg7_t, class arg8_t, class arg9_t, class arg10_t, class arg11_t, class arg12_t, class arg13_t>
 void send(mailbox_manager_t *src,
-          typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t) >::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9, const arg10_t &arg10, const arg11_t &arg11, const arg12_t &arg12, const arg13_t &arg13) {
-    typename mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t) >::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
+          typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t>::address_t dest, const arg0_t &arg0, const arg1_t &arg1, const arg2_t &arg2, const arg3_t &arg3, const arg4_t &arg4, const arg5_t &arg5, const arg6_t &arg6, const arg7_t &arg7, const arg8_t &arg8, const arg9_t &arg9, const arg10_t &arg10, const arg11_t &arg11, const arg12_t &arg12, const arg13_t &arg13) {
+    typename mailbox_t<arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t>::write_impl_t writer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
     send(src, dest.addr, &writer);
 }
 

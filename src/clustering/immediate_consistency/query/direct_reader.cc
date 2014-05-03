@@ -19,7 +19,7 @@ direct_reader_business_card_t direct_reader_t::get_business_card() {
 
 void direct_reader_t::on_read(
         const read_t &read,
-        const mailbox_addr_t<void(read_response_t)> &cont) {
+        const mailbox_addr_t<read_response_t> &cont) {
     auto_drainer_t::lock_t keepalive(&drainer);
 
     try {

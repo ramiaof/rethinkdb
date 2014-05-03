@@ -274,7 +274,7 @@ void cluster_namespace_interface_t::perform_outdated_read(
 
     try {
         cond_t done;
-        mailbox_t<void(read_response_t)> cont(mailbox_manager,
+        mailbox_t<read_response_t> cont(mailbox_manager,
                                               std::bind(&outdated_read_store_result, &results->at(i), ph::_1, &done));
 
         send(mailbox_manager, direct_reader_to_contact->direct_reader_access->access().read_mailbox, direct_reader_to_contact->sharded_op, cont.get_address());

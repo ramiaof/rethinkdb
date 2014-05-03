@@ -10,10 +10,7 @@ is a primary or secondary for. */
 
 class direct_reader_business_card_t {
 public:
-    typedef mailbox_t< void(
-            read_t,
-            mailbox_addr_t< void(read_response_t)>
-            )> read_mailbox_t;
+    typedef mailbox_t<read_t, mailbox_addr_t<read_response_t> > read_mailbox_t;
 
     direct_reader_business_card_t() { }
     explicit direct_reader_business_card_t(const read_mailbox_t::address_t &rm) : read_mailbox(rm) { }

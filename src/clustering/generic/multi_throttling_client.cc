@@ -48,7 +48,7 @@ multi_throttling_client_t<request_type, inner_client_business_card_type>::multi_
     reclaim_tickets_mailbox(mailbox_manager,
         std::bind(&multi_throttling_client_t::on_reclaim_tickets, this, ph::_1))
 {
-    mailbox_t<void(server_business_card_t)> intro_mailbox(
+    mailbox_t<server_business_card_t> intro_mailbox(
         mailbox_manager,
         std::bind(&promise_t<server_business_card_t>::pulse, &intro_promise, ph::_1));
 

@@ -50,7 +50,7 @@ void master_access_t::read(
 
     promise_t<boost::variant<read_response_t, std::string> >
         result_or_failure;
-    mailbox_t<void(boost::variant<read_response_t, std::string>)>
+    mailbox_t<boost::variant<read_response_t, std::string> >
         result_or_failure_mailbox(
             mailbox_manager,
             std::bind(&promise_t<boost::variant<read_response_t, std::string> >::pulse,
@@ -105,7 +105,7 @@ void master_access_t::write(
     rassert(region_is_superset(region, write.get_region()));
 
     promise_t<boost::variant<write_response_t, std::string> > result_or_failure;
-    mailbox_t<void(boost::variant<write_response_t, std::string>)> result_or_failure_mailbox(
+    mailbox_t<boost::variant<write_response_t, std::string> > result_or_failure_mailbox(
         mailbox_manager,
         std::bind(&promise_t<boost::variant<write_response_t, std::string> >::pulse, &result_or_failure, ph::_1));
 

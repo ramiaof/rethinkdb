@@ -73,8 +73,8 @@ private:
 
     auto_drainer_t drainer;
 
-    mailbox_t<void(int)> give_tickets_mailbox;
-    mailbox_t<void(int)> reclaim_tickets_mailbox;
+    mailbox_t<int> give_tickets_mailbox;
+    mailbox_t<int> reclaim_tickets_mailbox;
 
     scoped_ptr_t< registrant_t<
         typename multi_throttling_business_card_t<request_type, inner_client_business_card_type>::client_business_card_t

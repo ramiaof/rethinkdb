@@ -150,7 +150,7 @@ listener_t::listener_t(const base_path_t &base_path,
          * live streaming from. */
 
         cond_t backfiller_is_up_to_date;
-        mailbox_t<void()> ack_mbox(
+        mailbox_t<> ack_mbox(
             mailbox_manager_,
             std::bind(&cond_t::pulse, &backfiller_is_up_to_date));
 
@@ -398,7 +398,7 @@ void listener_t::on_write(const write_t &write,
         transition_timestamp_t transition_timestamp,
         order_token_t order_token,
         fifo_enforcer_write_token_t fifo_token,
-        mailbox_addr_t<void()> ack_addr)
+        mailbox_addr_t<> ack_addr)
         THROWS_NOTHING {
     try {
         cond_t dummy_interruptor;
@@ -475,7 +475,7 @@ void listener_t::on_writeread(const write_t &write,
         transition_timestamp_t transition_timestamp,
         order_token_t order_token,
         fifo_enforcer_write_token_t fifo_token,
-        mailbox_addr_t<void(write_response_t)> ack_addr,
+        mailbox_addr_t<write_response_t> ack_addr,
         write_durability_t durability)
         THROWS_NOTHING {
     try {
@@ -547,7 +547,7 @@ void listener_t::on_read(const read_t &read,
         state_timestamp_t expected_timestamp,
         order_token_t order_token,
         fifo_enforcer_read_token_t fifo_token,
-        mailbox_addr_t<void(read_response_t)> ack_addr)
+        mailbox_addr_t<read_response_t> ack_addr)
         THROWS_NOTHING {
     try {
         cond_t dummy_interruptor;

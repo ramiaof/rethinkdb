@@ -180,7 +180,7 @@ private:
             transition_timestamp_t transition_timestamp,
             order_token_t order_token,
             fifo_enforcer_write_token_t fifo_token,
-            mailbox_addr_t<void()> ack_addr)
+            mailbox_addr_t<> ack_addr)
         THROWS_NOTHING;
 
     void perform_enqueued_write(const write_queue_entry_t &serialized_write, state_timestamp_t backfill_end_timestamp, signal_t *interruptor)
@@ -193,7 +193,7 @@ private:
             transition_timestamp_t transition_timestamp,
             order_token_t order_token,
             fifo_enforcer_write_token_t fifo_token,
-            mailbox_addr_t<void(write_response_t)> ack_addr,
+            mailbox_addr_t<write_response_t> ack_addr,
             write_durability_t durability)
         THROWS_NOTHING;
 
@@ -201,7 +201,7 @@ private:
             state_timestamp_t expected_timestamp,
             order_token_t order_token,
             fifo_enforcer_read_token_t fifo_token,
-            mailbox_addr_t<void(read_response_t)> ack_addr)
+            mailbox_addr_t<read_response_t> ack_addr)
         THROWS_NOTHING;
 
     void advance_current_timestamp_and_pulse_waiters(transition_timestamp_t timestamp);

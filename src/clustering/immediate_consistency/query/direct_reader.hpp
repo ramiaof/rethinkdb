@@ -24,7 +24,7 @@ public:
 private:
     void on_read(
             const read_t &,
-            const mailbox_addr_t<void(read_response_t)> &);
+            const mailbox_addr_t<read_response_t> &);
 
     mailbox_manager_t *mailbox_manager;
     store_view_t *svs;

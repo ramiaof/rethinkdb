@@ -63,9 +63,9 @@ private:
 
             drainer(new auto_drainer_t),
 
-            request_mailbox(new mailbox_t<void(request_type)>(parent->mailbox_manager,
+            request_mailbox(new mailbox_t<request_type>(parent->mailbox_manager,
                 std::bind(&client_t::on_request, this, ph::_1))),
-            relinquish_tickets_mailbox(new mailbox_t<void(int)>(parent->mailbox_manager,
+            relinquish_tickets_mailbox(new mailbox_t<int>(parent->mailbox_manager,
                 std::bind(&client_t::on_relinquish_tickets, this, ph::_1)))
         {
             send(parent->mailbox_manager, client_bc.intro_addr,
@@ -166,15 +166,15 @@ private:
         int running_qps_estimate;
         repeating_timer_t qps_sample_timer;
 
-        mailbox_addr_t<void(int)> give_tickets_addr;
-        mailbox_addr_t<void(int)> reclaim_tickets_addr;
+        mailbox_addr_t<int> give_tickets_addr;
+        mailbox_addr_t<int> reclaim_tickets_addr;
 
         registrant_type registrant;
 
         scoped_ptr_t<auto_drainer_t> drainer;
 
-        scoped_ptr_t<mailbox_t<void(request_type)> > request_mailbox;
-        scoped_ptr_t<mailbox_t<void(int)> > relinquish_tickets_mailbox;
+        scoped_ptr_t<mailbox_t<request_type> > request_mailbox;
+        scoped_ptr_t<mailbox_t<int> > relinquish_tickets_mailbox;
     };
 
     void on_ring() {

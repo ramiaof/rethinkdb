@@ -28,36 +28,36 @@ public:
     /* These are the types of mailboxes that the master uses to communicate with
     the mirrors. */
 
-    typedef mailbox_t<void(write_t,
-                           transition_timestamp_t,
-                           order_token_t,
-                           fifo_enforcer_write_token_t,
-                           mailbox_addr_t<void()> ack_addr)> write_mailbox_t;
+    typedef mailbox_t<write_t,
+                      transition_timestamp_t,
+                      order_token_t,
+                      fifo_enforcer_write_token_t,
+                      mailbox_addr_t<> /* ack_addr */> write_mailbox_t;
 
-    typedef mailbox_t<void(write_t,
-                           transition_timestamp_t,
-                           order_token_t,
-                           fifo_enforcer_write_token_t,
-                           mailbox_addr_t<void(write_response_t)>,
-                           write_durability_t)> writeread_mailbox_t;
+    typedef mailbox_t<write_t,
+                      transition_timestamp_t,
+                      order_token_t,
+                      fifo_enforcer_write_token_t,
+                      mailbox_addr_t<write_response_t>,
+                      write_durability_t> writeread_mailbox_t;
 
-    typedef mailbox_t<void(read_t,
-                           state_timestamp_t,
-                           order_token_t,
-                           fifo_enforcer_read_token_t,
-                           mailbox_addr_t<void(read_response_t)>)> read_mailbox_t;
+    typedef mailbox_t<read_t,
+                      state_timestamp_t,
+                      order_token_t,
+                      fifo_enforcer_read_token_t,
+                      mailbox_addr_t<read_response_t> > read_mailbox_t;
 
     /* The master sends a single message to `intro_mailbox` at the
     very beginning. This tells the mirror what timestamp it's at, the
     master's cpu sharding subspace count, and also tells it where to
     send upgrade/downgrade messages. */
 
-    typedef mailbox_t<void(writeread_mailbox_t::address_t,
-                           read_mailbox_t::address_t)> upgrade_mailbox_t;
+    typedef mailbox_t<writeread_mailbox_t::address_t,
+                      read_mailbox_t::address_t> upgrade_mailbox_t;
 
-    typedef mailbox_t<void(mailbox_addr_t<void()>)> downgrade_mailbox_t;
+    typedef mailbox_t<mailbox_addr_t<> > downgrade_mailbox_t;
 
-    typedef mailbox_t<void(listener_intro_t)> intro_mailbox_t;
+    typedef mailbox_t<listener_intro_t> intro_mailbox_t;
 
     listener_business_card_t() { }
     listener_business_card_t(const intro_mailbox_t::address_t &im,
@@ -99,24 +99,24 @@ backfills over the network. It appears in the directory. */
 
 struct backfiller_business_card_t {
 
-    typedef mailbox_t< void(
+    typedef mailbox_t<
         backfill_session_id_t,
         region_map_t<version_range_t>,
         branch_history_t,
-        mailbox_addr_t< void(
+        mailbox_addr_t<
             region_map_t<version_range_t>,
             branch_history_t
-            ) >,
-        mailbox_addr_t<void(backfill_chunk_t, fifo_enforcer_write_token_t)>,
-        mailbox_t<void(fifo_enforcer_write_token_t)>::address_t,
-        mailbox_t<void(mailbox_addr_t<void(int)>)>::address_t
-        )> backfill_mailbox_t;
+            >,
+        mailbox_addr_t<backfill_chunk_t, fifo_enforcer_write_token_t>,
+        mailbox_t<fifo_enforcer_write_token_t>::address_t,
+        mailbox_t<mailbox_addr_t<int> >::address_t
+        > backfill_mailbox_t;
 
-    typedef mailbox_t<void(backfill_session_id_t)> cancel_backfill_mailbox_t;
+    typedef mailbox_t<backfill_session_id_t> cancel_backfill_mailbox_t;
 
 
     /* Mailboxes used for requesting the progress of a backfill */
-    typedef mailbox_t<void(backfill_session_id_t, mailbox_addr_t<void(std::pair<int, int>)>)> request_progress_mailbox_t;
+    typedef mailbox_t<backfill_session_id_t, mailbox_addr_t<std::pair<int, int> > > request_progress_mailbox_t;
 
     backfiller_business_card_t() { }
     backfiller_business_card_t(
@@ -163,7 +163,7 @@ struct replier_business_card_t {
     /* This mailbox is used to check that the replier is at least as up to date
      * as the timestamp. The second argument is used as an ack mailbox, once
      * synchronization is complete the replier will send a message to it. */
-    typedef mailbox_t<void(state_timestamp_t, mailbox_addr_t<void()>)> synchronize_mailbox_t;
+    typedef mailbox_t<state_timestamp_t, mailbox_addr_t<> > synchronize_mailbox_t;
     synchronize_mailbox_t::address_t synchronize_mailbox;
 
     backfiller_business_card_t backfiller_bcard;

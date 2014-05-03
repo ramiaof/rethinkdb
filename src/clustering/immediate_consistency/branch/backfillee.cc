@@ -50,7 +50,7 @@ class chunk_callback_t : public coro_pool_callback_t<backfill_queue_entry_t>,
 public:
     chunk_callback_t(store_view_t *_svs,
                      fifo_enforcer_queue_t<backfill_queue_entry_t> *_chunk_queue, mailbox_manager_t *_mbox_manager,
-                     mailbox_addr_t<void(int)> _allocation_mailbox) :
+                     mailbox_addr_t<int> _allocation_mailbox) :
         svs(_svs), chunk_queue(_chunk_queue), mbox_manager(_mbox_manager),
         allocation_mailbox(_allocation_mailbox), unacked_chunks(0),
         done_message_arrived(false), num_outstanding_chunks(0),
@@ -133,7 +133,7 @@ private:
     store_view_t *svs;
     fifo_enforcer_queue_t<backfill_queue_entry_t> *chunk_queue;
     mailbox_manager_t *mbox_manager;
-    mailbox_addr_t<void(int)> allocation_mailbox;
+    mailbox_addr_t<int> allocation_mailbox;
     int unacked_chunks;
     bool done_message_arrived;
     int num_outstanding_chunks;
@@ -185,7 +185,7 @@ void backfillee(
     any other messages; that message will tell us what the version will be when
     the backfill is over. */
     promise_t<std::pair<region_map_t<version_range_t>, branch_history_t> > end_point_cond;
-    mailbox_t<void(region_map_t<version_range_t>, branch_history_t)> end_point_mailbox(
+    mailbox_t<region_map_t<version_range_t>, branch_history_t> end_point_mailbox(
         mailbox_manager,
         std::bind(&receive_end_point_message, &end_point_cond, ph::_1, ph::_2));
 
@@ -200,20 +200,20 @@ void backfillee(
 
         /* The backfiller will notify `done_mailbox` when the backfill is all over
         and the version described in `end_point_mailbox` has been achieved. */
-        mailbox_t<void(fifo_enforcer_write_token_t)> done_mailbox(
+        mailbox_t<fifo_enforcer_write_token_t> done_mailbox(
             mailbox_manager,
             std::bind(&push_finish_on_queue, &chunk_queue, ph::_1));
 
         /* The backfiller will send individual chunks of the backfill to
         `chunk_mailbox`. */
-        mailbox_t<void(backfill_chunk_t, fifo_enforcer_write_token_t)> chunk_mailbox(
+        mailbox_t<backfill_chunk_t, fifo_enforcer_write_token_t> chunk_mailbox(
             mailbox_manager, std::bind(&push_chunk_on_queue, &chunk_queue, ph::_1, ph::_2));
 
         /* The backfiller will register for allocations on the allocation
          * registration box. */
-        promise_t<mailbox_addr_t<void(int)> > alloc_mailbox_promise;
-        mailbox_t<void(mailbox_addr_t<void(int)>)>  alloc_registration_mbox(
-                mailbox_manager, std::bind(&promise_t<mailbox_addr_t<void(int)> >::pulse, &alloc_mailbox_promise, ph::_1));
+        promise_t<mailbox_addr_t<int> > alloc_mailbox_promise;
+        mailbox_t<mailbox_addr_t<int> >  alloc_registration_mbox(
+                mailbox_manager, std::bind(&promise_t<mailbox_addr_t<int> >::pulse, &alloc_mailbox_promise, ph::_1));
 
         /* Send off the backfill request */
         send(mailbox_manager,
@@ -245,7 +245,7 @@ void backfillee(
         }
 
         /* Wait to get an allocation mailbox */
-        mailbox_addr_t<void(int)> allocation_mailbox;
+        mailbox_addr_t<int> allocation_mailbox;
         {
             wait_any_t waiter(alloc_mailbox_promise.get_ready_signal(), backfiller.get_failed_signal());
             wait_interruptible(&waiter, interruptor);

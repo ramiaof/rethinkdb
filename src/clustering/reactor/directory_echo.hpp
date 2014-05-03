@@ -23,10 +23,10 @@ private:
     friend class directory_echo_writer_t;
     template<class internal2_t>
     friend class directory_echo_mirror_t;
-    directory_echo_wrapper_t(const internal_t &i, directory_echo_version_t v, const mailbox_addr_t<void(peer_id_t, directory_echo_version_t)> &am) :
+    directory_echo_wrapper_t(const internal_t &i, directory_echo_version_t v, const mailbox_addr_t<peer_id_t, directory_echo_version_t> &am) :
         internal(i), version(v), ack_mailbox(am) { }
     directory_echo_version_t version;
-    mailbox_addr_t<void(peer_id_t, directory_echo_version_t)> ack_mailbox;
+    mailbox_addr_t<peer_id_t, directory_echo_version_t> ack_mailbox;
 public:
     RDB_MAKE_ME_SERIALIZABLE_3(0, internal, version, ack_mailbox);
     RDB_MAKE_ME_EQUALITY_COMPARABLE_3(directory_echo_wrapper_t<internal_t>,
@@ -79,7 +79,7 @@ private:
     mutex_assertion_t ack_lock;
 
     auto_drainer_t drainer;
-    mailbox_t<void(peer_id_t, directory_echo_version_t)> ack_mailbox;
+    mailbox_t<peer_id_t, directory_echo_version_t> ack_mailbox;
 
     watchable_variable_t<directory_echo_wrapper_t<internal_t> > value_watchable;
     mutex_assertion_t value_lock;
@@ -107,7 +107,7 @@ public:
 private:
     void on_change();
     void ack_version(
-            mailbox_t<void(peer_id_t, directory_echo_version_t)>::address_t peer,
+            mailbox_t<peer_id_t, directory_echo_version_t>::address_t peer,
             directory_echo_version_t version, auto_drainer_t::lock_t);
     mailbox_manager_t *mailbox_manager;
     clone_ptr_t<watchable_t<change_tracking_map_t<peer_id_t, directory_echo_wrapper_t<internal_t> > > > peers;

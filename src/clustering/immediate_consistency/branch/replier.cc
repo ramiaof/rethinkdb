@@ -47,7 +47,7 @@ replier_t::~replier_t() {
         send(mailbox_manager_,
              listener_->registration_done_cond_value().downgrade_mailbox,
              /* We don't want a confirmation */
-             mailbox_addr_t<void()>());
+             mailbox_addr_t<>());
     }
 }
 
@@ -55,7 +55,7 @@ replier_business_card_t replier_t::get_business_card() {
     return replier_business_card_t(synchronize_mailbox_.get_address(), backfiller_.get_business_card());
 }
 
-void replier_t::on_synchronize(state_timestamp_t timestamp, mailbox_addr_t<void()> ack_mbox, auto_drainer_t::lock_t keepalive) {
+void replier_t::on_synchronize(state_timestamp_t timestamp, mailbox_addr_t<> ack_mbox, auto_drainer_t::lock_t keepalive) {
     try {
         listener_->wait_for_version(timestamp, keepalive.get_drain_signal());
         send(mailbox_manager_, ack_mbox);

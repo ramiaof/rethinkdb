@@ -24,7 +24,7 @@ def generate_async_message_template(nargs):
     def cpre(template):
         return ncpre(template, nargs)
 
-    mailbox_t_str = "mailbox_t< void(%s) >" % csep("arg#_t")
+    mailbox_t_str = "mailbox_t<%s>" % csep("arg#_t")
     print
     print "template<%s>" % csep("class arg#_t")
     print "class %s {" % mailbox_t_str
@@ -72,10 +72,10 @@ def generate_async_message_template(nargs):
     print "    read_impl_t reader;"
     print
     print "public:"
-    print "    typedef mailbox_addr_t< void(%s) > address_t;" % csep("arg#_t")
+    print "    typedef mailbox_addr_t<%s> address_t;" % csep("arg#_t")
     print
     print "    mailbox_t(mailbox_manager_t *manager,"
-    print "              const std::function< void(%s)> &f) :" % csep("arg#_t")
+    print "              const std::function<void (%s)> &f) :" % csep("arg#_t")
     print "        reader(this), fun(f), mailbox(manager, &reader)"
     print "        { }"
     print
@@ -91,9 +91,9 @@ def generate_async_message_template(nargs):
     else:
         print "    template<%s>" % csep("class a#_t")
         print "    friend void send(mailbox_manager_t*,"
-        print "                     typename mailbox_t< void(%s) >::address_t%s);" % (csep("a#_t"), cpre("const a#_t&"))
+        print "                     typename mailbox_t<%s>::address_t%s);" % (csep("a#_t"), cpre("const a#_t&"))
     print
-    print "    std::function< void(%s) > fun;" % csep("arg#_t")
+    print "    std::function<void (%s)> fun;" % csep("arg#_t")
     print "    raw_mailbox_t mailbox;"
     print "};"
     print
@@ -130,25 +130,25 @@ if __name__ == "__main__":
     print "#include \"rpc/mailbox/mailbox.hpp\""
     print "#include \"rpc/semilattice/joins/macros.hpp\""
     print
-    print "template <class> class mailbox_t;"
+    print "template <class...> class mailbox_t;"
     print
-    print "template <class T>"
+    print "template <class... Args>"
     print "class mailbox_addr_t {"
     print "public:"
     print "    bool is_nil() const { return addr.is_nil(); }"
     print "    peer_id_t get_peer() const { return addr.get_peer(); }"
     print
-    print "    friend class mailbox_t<T>;"
+    print "    friend class mailbox_t<Args...>;"
     print
     print "    RDB_MAKE_ME_SERIALIZABLE_1(0, addr);"
-    print "    RDB_MAKE_ME_EQUALITY_COMPARABLE_1(mailbox_addr_t<T>, addr);"
+    print "    RDB_MAKE_ME_EQUALITY_COMPARABLE_1(mailbox_addr_t<Args...>, addr);"
     print
     print "private:"
-    print "    friend void send(mailbox_manager_t *, mailbox_addr_t<void()>);"
+    print "    friend void send(mailbox_manager_t *, mailbox_addr_t<>);"
     for nargs in xrange(1,15):
         print "    template <%s>" % ncsep("class a#_t", nargs)
         print "    friend void send(mailbox_manager_t *,"
-        print "                     typename mailbox_t< void(%s) >::address_t%s);" % (ncsep("a#_t", nargs), ncpre("const a#_t&", nargs))
+        print "                     typename mailbox_t<%s>::address_t%s);" % (ncsep("a#_t", nargs), ncpre("const a#_t&", nargs))
     print
     print "    raw_mailbox_t::address_t addr;"
     print "};"
