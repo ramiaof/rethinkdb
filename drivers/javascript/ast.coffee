@@ -293,6 +293,8 @@ class RDBVal extends TermBase
 
     sync: ar () -> new Sync {}, @
 
+    changes: ar () -> new Changes {}, @
+
     toISO8601: ar () -> new ToISO8601 {}, @
     toEpochTime: ar () -> new ToEpochTime {}, @
     inTimezone: ar (tzstr) -> new InTimezone {}, @, tzstr
@@ -833,6 +835,10 @@ class IndexWait extends RDBOp
 class Sync extends RDBOp
     tt: protoTermType.SYNC
     mt: 'sync'
+
+class Changes extends RDBOp
+    tt: protoTermType.CHANGES
+    mt: 'changes'
 
 class FunCall extends RDBOp
     tt: protoTermType.FUNCALL
