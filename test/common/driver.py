@@ -47,6 +47,9 @@ def find_rethinkdb_executable(mode = ""):
             mode = 'debug'
     return find_subpath("build/%s/rethinkdb" % mode)
 
+def find_rethinkdb_executable(mode=None):
+    return utils.latest_rethinkdb_executable(mode=mode)
+
 def get_table_host(processes):
     return ("localhost", random.choice(processes).driver_port)
 
