@@ -1,5 +1,4 @@
 # Copyright 2010-2012 RethinkDB, all rights reserved.
-import sys, os, time, socket, signal, subprocess, shutil, tempfile, random, re
 
 """`driver.py` is a module for starting groups of RethinkDB cluster nodes and
 connecting them to each other. It also supports netsplits.
@@ -13,6 +12,10 @@ test it; if you want to do strange things like tell RethinkDB to `--join` an
 invalid port, or delete the files out from under a running RethinkDB process,
 or so on, you should start a RethinkDB process manually using some other
 module. """
+
+import sys, os, time, socket, signal, subprocess, shutil, tempfile, random, re
+
+import utils
 
 def block_path(source_port, dest_port):
     if not ("resunder" in subprocess.check_output(["ps", "-A"])):
@@ -28,24 +31,6 @@ def unblock_path(source_port, dest_port):
     conn = socket.create_connection(("localhost", 46594))
     conn.sendall("unblock %s %s\n" % (str(source_port), str(dest_port)))
     conn.close()
-
-def find_subpath(subpath):
-    paths = [subpath, "../" + subpath, "../../" + subpath, "../../../" + subpath]
-    if "RETHINKDB" in os.environ:
-        paths = [os.path.join(os.environ["RETHINKDB"], subpath)]
-    for path in paths:
-        if os.path.exists(path):
-            return path
-    raise RuntimeError("Can't find path %s.  Tried these paths: %s" % (subpath, paths))
-
-def find_rethinkdb_executable(mode = ""):
-    if mode == "":
-        build_dir = os.getenv('RETHINKDB_BUILD_DIR')
-        if build_dir:
-            return os.path.join(build_dir, 'rethinkdb')
-        else:
-            mode = 'debug'
-    return find_subpath("build/%s/rethinkdb" % mode)
 
 def find_rethinkdb_executable(mode=None):
     return utils.latest_rethinkdb_executable(mode=mode)
