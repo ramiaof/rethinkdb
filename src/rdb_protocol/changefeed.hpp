@@ -12,6 +12,7 @@
 #include "containers/counted.hpp"
 #include "containers/scoped.hpp"
 #include "protocol_api.hpp"
+#include "rdb_protocol/changefeed_types.hpp"
 #include "repli_timestamp.hpp"
 #include "rpc/connectivity/connectivity.hpp"
 #include "rpc/mailbox/typed.hpp"
@@ -69,9 +70,6 @@ struct msg_t {
 };
 
 class feed_t;
-struct stamped_msg_t;
-
-typedef mailbox_addr_t<void(stamped_msg_t)> client_addr_t;
 
 // The `client_t` exists on the machine handling the changefeed query, in the
 // `rdb_context_t`.  When a query subscribes to the changes on a table, it
@@ -108,8 +106,6 @@ private:
     rwlock_t feeds_lock;
     auto_drainer_t drainer;
 };
-
-typedef mailbox_addr_t<void(client_addr_t)> server_addr_t;
 
 // There is one `server_t` per `store_t`, and it is used to send changes that
 // occur on that `store_t` to any subscribed `feed_t`s contained in a
