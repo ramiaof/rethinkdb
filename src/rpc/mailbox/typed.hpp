@@ -10,71 +10,9 @@ Please modify '../scripts/generate_rpc_templates.py' instead of modifying this f
 #include "containers/archive/versioned.hpp"
 #include "rpc/serialize_macros.hpp"
 #include "rpc/mailbox/mailbox.hpp"
+#include "rpc/mailbox/addr.hpp"
 #include "rpc/semilattice/joins/macros.hpp"
 
-template <class> class mailbox_t;
-
-template <class T>
-class mailbox_addr_t {
-public:
-    bool operator<(const mailbox_addr_t<T> &other) const {
-        return addr < other.addr;
-    }
-    bool is_nil() const { return addr.is_nil(); }
-    peer_id_t get_peer() const { return addr.get_peer(); }
-
-    friend class mailbox_t<T>;
-
-    RDB_MAKE_ME_SERIALIZABLE_1(addr);
-    RDB_MAKE_ME_EQUALITY_COMPARABLE_1(mailbox_addr_t<T>, addr);
-
-private:
-    friend void send(mailbox_manager_t *, mailbox_addr_t<void()>);
-    template <class a0_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t) >::address_t, const a0_t&);
-    template <class a0_t, class a1_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t) >::address_t, const a0_t&, const a1_t&);
-    template <class a0_t, class a1_t, class a2_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t) >::address_t, const a0_t&, const a1_t&, const a2_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t, class a12_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&);
-    template <class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t, class a12_t, class a13_t>
-    friend void send(mailbox_manager_t *,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t, a13_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&, const a13_t&);
-
-    raw_mailbox_t::address_t addr;
-};
 
 template<>
 class mailbox_t< void() > {
@@ -134,7 +72,7 @@ class mailbox_t< void(arg0_t) > {
     private:
         const arg0_t &arg0;
     public:
-        explicit write_impl_t(const arg0_t& _arg0) :
+        explicit write_impl_t(const arg0_t &_arg0) :
             arg0(_arg0)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -174,7 +112,7 @@ public:
 private:
     template<class a0_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t) >::address_t, const a0_t&);
+                     typename mailbox_t< void(a0_t) >::address_t, const a0_t &);
 
     std::function< void(arg0_t) > fun;
     raw_mailbox_t mailbox;
@@ -195,7 +133,7 @@ class mailbox_t< void(arg0_t, arg1_t) > {
         const arg0_t &arg0;
         const arg1_t &arg1;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1) :
             arg0(_arg0), arg1(_arg1)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -239,7 +177,7 @@ public:
 private:
     template<class a0_t, class a1_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t) >::address_t, const a0_t&, const a1_t&);
+                     typename mailbox_t< void(a0_t, a1_t) >::address_t, const a0_t &, const a1_t &);
 
     std::function< void(arg0_t, arg1_t) > fun;
     raw_mailbox_t mailbox;
@@ -261,7 +199,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t) > {
         const arg1_t &arg1;
         const arg2_t &arg2;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -309,7 +247,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t) >::address_t, const a0_t&, const a1_t&, const a2_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t) >::address_t, const a0_t &, const a1_t &, const a2_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t) > fun;
     raw_mailbox_t mailbox;
@@ -332,7 +270,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t) > {
         const arg2_t &arg2;
         const arg3_t &arg3;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -384,7 +322,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t) > fun;
     raw_mailbox_t mailbox;
@@ -408,7 +346,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) > {
         const arg3_t &arg3;
         const arg4_t &arg4;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -464,7 +402,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t) > fun;
     raw_mailbox_t mailbox;
@@ -489,7 +427,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) > {
         const arg4_t &arg4;
         const arg5_t &arg5;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4, const arg5_t& _arg5) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4, const arg5_t &_arg5) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4), arg5(_arg5)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -549,7 +487,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &, const a5_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t) > fun;
     raw_mailbox_t mailbox;
@@ -575,7 +513,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) > 
         const arg5_t &arg5;
         const arg6_t &arg6;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4, const arg5_t& _arg5, const arg6_t& _arg6) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4, const arg5_t &_arg5, const arg6_t &_arg6) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4), arg5(_arg5), arg6(_arg6)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -639,7 +577,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &, const a5_t &, const a6_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t) > fun;
     raw_mailbox_t mailbox;
@@ -666,7 +604,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
         const arg6_t &arg6;
         const arg7_t &arg7;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4, const arg5_t& _arg5, const arg6_t& _arg6, const arg7_t& _arg7) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4, const arg5_t &_arg5, const arg6_t &_arg6, const arg7_t &_arg7) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4), arg5(_arg5), arg6(_arg6), arg7(_arg7)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -734,7 +672,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &, const a5_t &, const a6_t &, const a7_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t) > fun;
     raw_mailbox_t mailbox;
@@ -762,7 +700,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
         const arg7_t &arg7;
         const arg8_t &arg8;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4, const arg5_t& _arg5, const arg6_t& _arg6, const arg7_t& _arg7, const arg8_t& _arg8) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4, const arg5_t &_arg5, const arg6_t &_arg6, const arg7_t &_arg7, const arg8_t &_arg8) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4), arg5(_arg5), arg6(_arg6), arg7(_arg7), arg8(_arg8)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -834,7 +772,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &, const a5_t &, const a6_t &, const a7_t &, const a8_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t) > fun;
     raw_mailbox_t mailbox;
@@ -863,7 +801,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
         const arg8_t &arg8;
         const arg9_t &arg9;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4, const arg5_t& _arg5, const arg6_t& _arg6, const arg7_t& _arg7, const arg8_t& _arg8, const arg9_t& _arg9) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4, const arg5_t &_arg5, const arg6_t &_arg6, const arg7_t &_arg7, const arg8_t &_arg8, const arg9_t &_arg9) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4), arg5(_arg5), arg6(_arg6), arg7(_arg7), arg8(_arg8), arg9(_arg9)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -939,7 +877,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &, const a5_t &, const a6_t &, const a7_t &, const a8_t &, const a9_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t) > fun;
     raw_mailbox_t mailbox;
@@ -969,7 +907,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
         const arg9_t &arg9;
         const arg10_t &arg10;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4, const arg5_t& _arg5, const arg6_t& _arg6, const arg7_t& _arg7, const arg8_t& _arg8, const arg9_t& _arg9, const arg10_t& _arg10) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4, const arg5_t &_arg5, const arg6_t &_arg6, const arg7_t &_arg7, const arg8_t &_arg8, const arg9_t &_arg9, const arg10_t &_arg10) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4), arg5(_arg5), arg6(_arg6), arg7(_arg7), arg8(_arg8), arg9(_arg9), arg10(_arg10)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -1049,7 +987,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &, const a5_t &, const a6_t &, const a7_t &, const a8_t &, const a9_t &, const a10_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t) > fun;
     raw_mailbox_t mailbox;
@@ -1080,7 +1018,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
         const arg10_t &arg10;
         const arg11_t &arg11;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4, const arg5_t& _arg5, const arg6_t& _arg6, const arg7_t& _arg7, const arg8_t& _arg8, const arg9_t& _arg9, const arg10_t& _arg10, const arg11_t& _arg11) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4, const arg5_t &_arg5, const arg6_t &_arg6, const arg7_t &_arg7, const arg8_t &_arg8, const arg9_t &_arg9, const arg10_t &_arg10, const arg11_t &_arg11) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4), arg5(_arg5), arg6(_arg6), arg7(_arg7), arg8(_arg8), arg9(_arg9), arg10(_arg10), arg11(_arg11)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -1164,7 +1102,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &, const a5_t &, const a6_t &, const a7_t &, const a8_t &, const a9_t &, const a10_t &, const a11_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t) > fun;
     raw_mailbox_t mailbox;
@@ -1196,7 +1134,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
         const arg11_t &arg11;
         const arg12_t &arg12;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4, const arg5_t& _arg5, const arg6_t& _arg6, const arg7_t& _arg7, const arg8_t& _arg8, const arg9_t& _arg9, const arg10_t& _arg10, const arg11_t& _arg11, const arg12_t& _arg12) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4, const arg5_t &_arg5, const arg6_t &_arg6, const arg7_t &_arg7, const arg8_t &_arg8, const arg9_t &_arg9, const arg10_t &_arg10, const arg11_t &_arg11, const arg12_t &_arg12) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4), arg5(_arg5), arg6(_arg6), arg7(_arg7), arg8(_arg8), arg9(_arg9), arg10(_arg10), arg11(_arg11), arg12(_arg12)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -1284,7 +1222,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t, class a12_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &, const a5_t &, const a6_t &, const a7_t &, const a8_t &, const a9_t &, const a10_t &, const a11_t &, const a12_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t) > fun;
     raw_mailbox_t mailbox;
@@ -1317,7 +1255,7 @@ class mailbox_t< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, ar
         const arg12_t &arg12;
         const arg13_t &arg13;
     public:
-        write_impl_t(const arg0_t& _arg0, const arg1_t& _arg1, const arg2_t& _arg2, const arg3_t& _arg3, const arg4_t& _arg4, const arg5_t& _arg5, const arg6_t& _arg6, const arg7_t& _arg7, const arg8_t& _arg8, const arg9_t& _arg9, const arg10_t& _arg10, const arg11_t& _arg11, const arg12_t& _arg12, const arg13_t& _arg13) :
+        write_impl_t(const arg0_t &_arg0, const arg1_t &_arg1, const arg2_t &_arg2, const arg3_t &_arg3, const arg4_t &_arg4, const arg5_t &_arg5, const arg6_t &_arg6, const arg7_t &_arg7, const arg8_t &_arg8, const arg9_t &_arg9, const arg10_t &_arg10, const arg11_t &_arg11, const arg12_t &_arg12, const arg13_t &_arg13) :
             arg0(_arg0), arg1(_arg1), arg2(_arg2), arg3(_arg3), arg4(_arg4), arg5(_arg5), arg6(_arg6), arg7(_arg7), arg8(_arg8), arg9(_arg9), arg10(_arg10), arg11(_arg11), arg12(_arg12), arg13(_arg13)
         { }
         void write(cluster_version_t cluster_version, write_message_t *wm) {
@@ -1409,7 +1347,7 @@ public:
 private:
     template<class a0_t, class a1_t, class a2_t, class a3_t, class a4_t, class a5_t, class a6_t, class a7_t, class a8_t, class a9_t, class a10_t, class a11_t, class a12_t, class a13_t>
     friend void send(mailbox_manager_t*,
-                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t, a13_t) >::address_t, const a0_t&, const a1_t&, const a2_t&, const a3_t&, const a4_t&, const a5_t&, const a6_t&, const a7_t&, const a8_t&, const a9_t&, const a10_t&, const a11_t&, const a12_t&, const a13_t&);
+                     typename mailbox_t< void(a0_t, a1_t, a2_t, a3_t, a4_t, a5_t, a6_t, a7_t, a8_t, a9_t, a10_t, a11_t, a12_t, a13_t) >::address_t, const a0_t &, const a1_t &, const a2_t &, const a3_t &, const a4_t &, const a5_t &, const a6_t &, const a7_t &, const a8_t &, const a9_t &, const a10_t &, const a11_t &, const a12_t &, const a13_t &);
 
     std::function< void(arg0_t, arg1_t, arg2_t, arg3_t, arg4_t, arg5_t, arg6_t, arg7_t, arg8_t, arg9_t, arg10_t, arg11_t, arg12_t, arg13_t) > fun;
     raw_mailbox_t mailbox;
