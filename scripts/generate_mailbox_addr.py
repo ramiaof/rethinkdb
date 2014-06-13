@@ -21,13 +21,8 @@ if __name__ == "__main__":
     print "Please modify '%s' instead of modifying this file.*/" % sys.argv[0]
     print
 
-    print "#include <functional>"
-    print
-# RSI Remove unnecessary includes.
-    print "#include \"containers/archive/archive.hpp\""
     print "#include \"rpc/serialize_macros.hpp\""
     print "#include \"rpc/mailbox/mailbox.hpp\""
-    print "#include \"rpc/semilattice/joins/macros.hpp\""
     print
 
     generate_rpc_templates.generate_mailbox_addr_template()

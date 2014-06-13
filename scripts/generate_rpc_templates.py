@@ -156,10 +156,8 @@ if __name__ == "__main__":
     print "#include <functional>"
     print
     print "#include \"containers/archive/versioned.hpp\""
-    print "#include \"rpc/serialize_macros.hpp\""
-    print "#include \"rpc/mailbox/mailbox.hpp\""
     print "#include \"rpc/mailbox/addr.hpp\""
-    print "#include \"rpc/semilattice/joins/macros.hpp\""
+    print "#include \"rpc/mailbox/mailbox.hpp\""
     print
 
     for nargs in xrange(15):
