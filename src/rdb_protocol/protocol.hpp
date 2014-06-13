@@ -20,7 +20,7 @@
 #include "concurrency/cond_var.hpp"
 #include "perfmon/perfmon.hpp"
 #include "protocol_api.hpp"
-#include "rdb_protocol/changefeed.hpp"
+#include "rdb_protocol/changefeed_types.hpp"
 #include "rdb_protocol/shards.hpp"
 #include "region/region.hpp"
 #include "repli_timestamp.hpp"
@@ -280,7 +280,7 @@ struct sindex_status_response_t {
 struct changefeed_subscribe_response_t {
     changefeed_subscribe_response_t() { }
     std::set<uuid_u> server_uuids;
-    std::set<ql::changefeed::server_t::addr_t> addrs;
+    std::set<ql::changefeed::server_addr_t> addrs;
     RDB_DECLARE_ME_SERIALIZABLE;
 };
 
@@ -416,9 +416,9 @@ public:
 class changefeed_subscribe_t {
 public:
     changefeed_subscribe_t() { }
-    explicit changefeed_subscribe_t(ql::changefeed::client_t::addr_t _addr)
+    explicit changefeed_subscribe_t(ql::changefeed::client_addr_t _addr)
         : addr(_addr), region(region_t::universe()) { }
-    ql::changefeed::client_t::addr_t addr;
+    ql::changefeed::client_addr_t addr;
     region_t region;
     RDB_DECLARE_ME_SERIALIZABLE;
 };
@@ -426,9 +426,9 @@ public:
 class changefeed_stamp_t {
 public:
     changefeed_stamp_t() : region(region_t::universe()) { }
-    explicit changefeed_stamp_t(ql::changefeed::client_t::addr_t _addr)
+    explicit changefeed_stamp_t(ql::changefeed::client_addr_t _addr)
         : addr(std::move(_addr)), region(region_t::universe()) { }
-    ql::changefeed::client_t::addr_t addr;
+    ql::changefeed::client_addr_t addr;
     region_t region;
     RDB_DECLARE_ME_SERIALIZABLE;
 };

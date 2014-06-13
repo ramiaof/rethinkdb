@@ -8,10 +8,11 @@ namespace ql {
 namespace changefeed {
 
 struct stamped_msg_t;
-
 typedef mailbox_addr_t<void(stamped_msg_t)> client_addr_t;
-
 typedef mailbox_addr_t<void(client_addr_t)> server_addr_t;
+
+class client_t;
+class server_t;
 
 
 }  // namespace changefeed
