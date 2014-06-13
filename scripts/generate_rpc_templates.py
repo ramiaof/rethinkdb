@@ -128,6 +128,7 @@ def generate_mailbox_addr_template():
     print "    peer_id_t get_peer() const { return addr.get_peer(); }"
     print
     print "    friend class mailbox_t<T>;"
+    print "    typedef mailbox_t<T> mailbox_type;"
     print
     print "    RDB_MAKE_ME_SERIALIZABLE_1(addr);"
     print "    RDB_MAKE_ME_EQUALITY_COMPARABLE_1(mailbox_addr_t<T>, addr);"
