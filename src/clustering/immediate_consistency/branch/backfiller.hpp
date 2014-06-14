@@ -7,6 +7,7 @@
 
 #include "clustering/immediate_consistency/branch/history.hpp"
 #include "clustering/immediate_consistency/branch/metadata.hpp"
+#include "rpc/mailbox/typed.hpp"
 
 class backfiller_send_backfill_callback_t;
 template <class> class semilattice_read_view_t;

@@ -10,6 +10,7 @@
 #include "concurrency/queue/disk_backed_queue_wrapper.hpp"
 #include "concurrency/semaphore.hpp"
 #include "rdb_protocol/protocol.hpp"
+#include "rpc/mailbox/typed.hpp"
 #include "serializer/types.hpp"
 #include "timestamps.hpp"
 #include "utils.hpp"
@@ -107,11 +108,11 @@ public:
         return branch_id_;
     }
 
-    listener_business_card_t::writeread_mailbox_t::address_t writeread_address() const {
+    listener_business_card_t::writeread_addr_t writeread_address() const {
         return writeread_mailbox_.get_address();
     }
 
-    listener_business_card_t::read_mailbox_t::address_t read_address() const {
+    listener_business_card_t::read_addr_t read_address() const {
         return read_mailbox_.get_address();
     }
 

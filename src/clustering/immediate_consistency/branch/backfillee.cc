@@ -3,9 +3,6 @@
 
 #include <functional>
 
-#include "errors.hpp"
-#include <boost/bind.hpp>
-
 #include "clustering/immediate_consistency/branch/history.hpp"
 #include "concurrency/coro_pool.hpp"
 #include "concurrency/cross_thread_signal.hpp"
@@ -15,6 +12,7 @@
 #include "concurrency/queue/unlimited_fifo.hpp"
 #include "containers/death_runner.hpp"
 #include "rdb_protocol/protocol.hpp"
+#include "rpc/mailbox/typed.hpp"
 #include "store_view.hpp"
 
 // Must be <= than MAX_CHUNKS_OUT in backfiller.cc
@@ -248,13 +246,13 @@ void backfillee(
         death_runner_t backfiller_notifier;
         {
             /* We have to cast `send()` to the correct type before we pass
-            it to `boost::bind()`, or else C++ can't figure out which
+            it to `std::bind()`, or else C++ can't figure out which
             overload to use. */
             void (*send_cast_to_correct_type)(
                 mailbox_manager_t *,
                 backfiller_business_card_t::cancel_backfill_mailbox_t::address_t,
                 const backfill_session_id_t &) = &send;
-            backfiller_notifier.fun = boost::bind(
+            backfiller_notifier.fun = std::bind(
                 send_cast_to_correct_type, mailbox_manager,
                 backfiller.access().cancel_backfill_mailbox,
                 backfill_session_id);

@@ -14,18 +14,18 @@ public:
 
 
     typedef mailbox_addr_t<void(registration_id_t, peer_id_t, business_card_t)>
-        create_mailbox_addr_t;
-    typedef typename create_mailbox_addr_t::mailbox_type create_mailbox_t;
-    create_mailbox_addr_t create_mailbox;
+        create_addr_t;
+    typedef typename create_addr_t::mailbox_type create_mailbox_t;
+    create_addr_t create_mailbox;
 
-    typedef mailbox_addr_t<void(registration_id_t)> delete_mailbox_addr_t;
-    typedef typename delete_mailbox_addr_t::mailbox_type delete_mailbox_t;
-    delete_mailbox_addr_t delete_mailbox;
+    typedef mailbox_addr_t<void(registration_id_t)> delete_addr_t;
+    typedef typename delete_addr_t::mailbox_type delete_mailbox_t;
+    delete_addr_t delete_mailbox;
 
     registrar_business_card_t() { }
 
-    registrar_business_card_t(const create_mailbox_addr_t &cm,
-                              const delete_mailbox_addr_t &dm)
+    registrar_business_card_t(const create_addr_t &cm,
+                              const delete_addr_t &dm)
         : create_mailbox(cm), delete_mailbox(dm) { }
 
     RDB_MAKE_ME_SERIALIZABLE_2(create_mailbox, delete_mailbox);
