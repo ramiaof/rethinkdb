@@ -13,7 +13,7 @@
 #include "concurrency/fifo_enforcer.hpp"
 #include "containers/archive/stl_types.hpp"
 #include "rdb_protocol/protocol.hpp"
-#include "rpc/mailbox/typed.hpp"
+#include "rpc/mailbox/addr.hpp"
 
 /* There is one `master_business_card_t` per branch. It's created by the master.
 Parsers use it to find the master. */

@@ -4,6 +4,7 @@
 
 #include "clustering/immediate_consistency/query/direct_reader_metadata.hpp"
 #include "concurrency/fifo_checker.hpp"
+#include "rpc/mailbox/typed.hpp"
 
 class store_view_t;
 
