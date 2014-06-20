@@ -3,7 +3,7 @@ from subprocess import check_call, CalledProcessError
 from os import environ
 from sys import stderr
 
-from test_framework import Test
+from test_framework import Test, TestFailure
 
 class ShellCommandTest(Test):
     def __init__(self, command, env={}, **kwargs):
@@ -26,7 +26,11 @@ class ShellCommandTest(Test):
             print k, "=", self.env[k]
         env = environ.copy()
         env.update(self.env)
-        check_call(self.command, shell=True, env=env)
+        try:
+            check_call(self.command, shell=True, env=env)
+        except CalledProcessError as error:
+            print 'shell command failed with exit code %d:\n%s' % (error.returncode, self.command)
+            raise TestFailure()
 
     def __str__(self):
         return self.command

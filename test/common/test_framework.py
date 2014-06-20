@@ -522,6 +522,9 @@ class Locked(object):
         with self as value:
             return value.copy()
 
+class TestFailure(Exception):
+    pass
+
 # Run a single test in a separate process
 class TestProcess(object):
     def __init__(self, runner, id, test, dir, run_dir):
@@ -565,6 +568,10 @@ class TestProcess(object):
                 self.test.run()
             except TimeoutException:
                 write_pipe.send(TestRunner.TIMED_OUT)
+            except TestFailure as e:
+                if e.args:
+                    sys.stderr.write('test failed: ' + str(e) + '\n')
+                write_pipe.send(TestRunner.FAILED)
             except:
                 sys.stdout.write(traceback.format_exc() + '\n')
                 sys.stderr.write(str(sys.exc_info()[1]) + '\n')
