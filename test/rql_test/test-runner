@@ -752,6 +752,6 @@ def main():
         if len(failedTests) > 1:
             plural = 's'
         sys.exit('\n== Failed %d test%s (of %d) in %.2f seconds!\n\t%s\n\n' % (len(failedTests), plural, len(testList), time.time() - startTime, '\n\t'.join(failedTests)))
-        
+
 if __name__ == '__main__':
     main()
