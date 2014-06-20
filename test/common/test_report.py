@@ -118,7 +118,7 @@ test_report_template = """
         <table style='width:100%%'>
           {{#tests}}
           <tr>
-            <td>{{name}}</td>
+            <td><nobr>{{name}}</nobr></td>
             <td class="test {{ status }}">
               <a href='#{{ id }}' onclick='toggleVisibility("{{ id }}")'>{{status}}</a>
             </td>
